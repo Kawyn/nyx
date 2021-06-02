@@ -33,7 +33,7 @@ To use custom shaders create a `<script>` with type "nyx-fragment" before callin
       <title>template</title>
       
       <script src="https://kawyn.github.io/nyx/src/index.js"> </script>
-      <script type="nyx-fragment" name="template">
+      <script type="nyx-fragment" name="your-superb-name">
           precision mediump float;
 
           uniform float u_time;
