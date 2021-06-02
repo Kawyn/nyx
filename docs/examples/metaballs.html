@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>metaballs</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+
+            overflow: hidden;
+        }
+
+    </style>
+
+    <script type="nyx-fragment" name="metaballs">
+        precision mediump float;
+
+        uniform vec2 u_mouse;
+        uniform vec2 u_resolution;
+
+        uniform float u_time;
+
+        vec2 point_a = vec2(.30, .10);
+        vec2 point_b = vec2(.80, .50);
+        vec2 point_c = vec2(.20, .85);
+
+        vec2 square = vec2(.75, .70);
+
+        float smin(float a, float b, float k) {
+
+            float h = clamp(.5 + .5 * (a - b) / k, 0., 1.);
+            return mix(a, b, h) - k * h * (1. - h);
+        }
+
+        void main() {
+
+            vec2 coords =  gl_FragCoord.xy / u_resolution;
+
+            float a = distance(coords, point_a) / 2.;
+            float b = distance(coords, point_b) * 2.;
+            float c = distance(coords, point_c);
+            float m = distance(coords, u_mouse) / 1.25;
+
+            float s = max(abs(coords.x - square.x), abs(coords.y - square.y)) * 2.;
+            float f = coords.y;
+            
+            float ab = smin(a, b, .3);
+            float abc = smin(ab, c, .1);
+            float abcm = smin(abc, m, .2);
+            float abcms = smin(abcm, s, .15);
+            float abcmsf = smin(abcms, f, .15);
+ 
+            gl_FragColor = vec4(vec3(step(abcmsf, .1)), 1.);
+        }
+    </script>
+    <script src="https://raw.githubusercontent.com/Kawyn/nyx/main/nyx.js"> </script>
+</head>
+
+<body>
+    <script>
+        const metaballs = new Nyx('metaballs', innerHeight * 0.8);
+
+        metaballs.uniforms.new('u_mouse', '2f', [0, 0], true);
+        metaballs.canvas.addEventListener('mousemove', event => {
+
+            const rect = metaballs.canvas.getBoundingClientRect();
+
+            let x = event.clientX - rect.left;
+            let y = event.clientY - rect.top;
+
+            x *= metaballs.canvas.width / metaballs.canvas.clientWidth;
+            y *= metaballs.canvas.height / metaballs.canvas.clientHeight;
+
+            metaballs.uniforms.set('u_mouse', [
+                x / metaballs.canvas.width,
+                y / metaballs.canvas.height * -1 + 1
+            ]);
+        });
+
+    </script>
+</body>
+
+</html>
