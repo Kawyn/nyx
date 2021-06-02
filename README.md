@@ -77,5 +77,5 @@ Properties
 Methods
 ---
 `.refresh()` - refresh canvas <br />
-`.uniforms.new(name, type, value)` - create new uniform given type [type](https://webglfundamentals.org/webgl/lessons/webgl-shaders-and-glsl.html#uniforms) where value is constant or function which returns value
+`.uniforms.new(name, type, value)` - create new uniform given [type](https://webglfundamentals.org/webgl/lessons/webgl-shaders-and-glsl.html#uniforms) where value is constant or function which returns value
 `.uniforms.set(name, value)` - update existing uniform
