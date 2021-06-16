@@ -158,10 +158,6 @@ class Nyx {
         }
     }
 
-    textures = {
-        // Do zrobienia
-    }
-
     refresh = () => {
 
         const ctx = this.ctx;
