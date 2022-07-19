@@ -1,5 +1,3 @@
-# NYX
-
 JavaScript framework that facilitates working with fragment shaders.
 
 ## Instalation
@@ -71,7 +69,7 @@ To use custom shaders create a `<script>` with type "nyx-fragment" before callin
 ## Properties
 
 | Property              | Default Value | Description                                            |
-| --------------------- | ------------- | ------------------------------------------------------ |
+| --------------------- | :-----------: | ------------------------------------------------------ |
 | canvas                | C\*           | Canvas object.                                         |
 | ctx                   | C\*           | WebGL context of canvas.                               |
 | settings.refresh      | true          | When true, the canvas will be automatically refreshed. |
