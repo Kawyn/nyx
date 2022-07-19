@@ -3,17 +3,8 @@
 
 <head>
     <meta charset="UTF-8" />
+
     <title>metaballs</title>
-
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-
-            overflow: hidden;
-        }
-
-    </style>
 
     <script type="nyx-fragment" name="metaballs">
         precision mediump float;
@@ -56,7 +47,7 @@
             gl_FragColor = vec4(vec3(step(abcmsf, .1)), 1.);
         }
     </script>
-    <script src="https://kawyn.github.io/nyx/src/index.js"> </script>
+    <script src="https://kawyn.github.io/nyx/lib/main.min.js"> </script>
 </head>
 
 <body>

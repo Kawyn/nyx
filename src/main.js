@@ -13,19 +13,23 @@ const FRAGMENT_DEFAULT = `
 `;
 
 
+/**
+ * JavaScript framework that facilitates working with fragment shaders.
+ */
 class Nyx {
 
-    constructor (name, width, height) {
+    /**
+     * Creates new fragment shader canvas.
+     * @param {string} name Name of canvas.
+     * @param {number} width Width of canvas.
+     * @param {number} height Height of canvas. If not defined it's equals width.
+     */
+    constructor (name, width = 100, height = null) {
 
-        if (!name) name = 'default';
+        if (!name)
+            name = 'default';
 
-
-        width = parseFloat(width);
-
-        if (!width || !isFinite(width))
-            throw 'NYX CONSTRUCTOR ERROR: width is not a number';
-
-        height = height ? height : width;
+        height = height | width;
 
 
         this.uniforms.set('u_resolution', [width, height]);
@@ -44,7 +48,7 @@ class Nyx {
 
 
         if (!ctx)
-            throw 'NYX CONSTRUCTOR ERROR: your browser does not support WebGL';
+            throw '[NYX] CONSTRUCTOR ERROR: your browser does not support WebGL';
 
 
         ctx.clearColor(BACKGROUND_COLOR[0], BACKGROUND_COLOR[1], BACKGROUND_COLOR[2], 1.);
@@ -55,6 +59,7 @@ class Nyx {
         const vShader = ctx.createShader(ctx.VERTEX_SHADER);
         const fShader = ctx.createShader(ctx.FRAGMENT_SHADER);
 
+        // Creating shader from script tag.
         ctx.shaderSource(fShader, document.querySelector('script[type="' + FRAGMENT_TYPE + '"][name="' + name + '"]')?.textContent || FRAGMENT_DEFAULT);
         ctx.shaderSource(vShader, `
             attribute vec2 a_position;
@@ -68,7 +73,7 @@ class Nyx {
         ctx.compileShader(fShader);
 
         if (!ctx.getShaderParameter(fShader, ctx.COMPILE_STATUS))
-            throw 'NYX FRAGMENT SHADER ' + ctx.getShaderInfoLog(fShader);
+            throw '[NYX] FRAGMENT SHADER ' + ctx.getShaderInfoLog(fShader);
 
         ctx.attachShader(program, vShader);
         ctx.attachShader(program, fShader);
@@ -133,6 +138,12 @@ class Nyx {
             value: [0., 0.],
         },
 
+        /**
+         * Creates new uniform (chainable).
+         * @param {string} name Name of uniform.
+         * @param {string} type Type of uniform. 
+         * @param {any} value Constant of function which returns value.
+         */
         new: (name, type, value) => {
 
             this.uniforms[name] = {
@@ -147,10 +158,15 @@ class Nyx {
             return this.uniforms;
         },
 
+        /**
+         * Updates value of existing uniform (chainable).
+         * @param {string} name Name of uniform. 
+         * @param {any} value New value of uniform.
+         */
         set: (name, value) => {
 
             if (!this.uniforms.hasOwnProperty(name))
-                throw 'NYX UNIFORM ERROR: ' + name + ' is undefined';
+                throw '[NYX] UNIFORM ERROR: ' + name + ' is undefined';
 
             this.uniforms[name].value = value;
 
@@ -158,7 +174,10 @@ class Nyx {
         }
     }
 
-    refresh = () => {
+    /**
+     * Refresh canvas with new values of uniforms. 
+     */
+    refresh() {
 
         const ctx = this.ctx;
 
@@ -209,7 +228,7 @@ class Nyx {
                     break;
 
                 default:
-                    throw 'NYX UNIFORM ERROR: ' + uniform.type + ' is not valid unifrom type in webctx';
+                    console.warn('[NYX] UNIFORM ERROR: ' + uniform.type + ' is not valid unifrom type in webctx.');
             }
         }
 
@@ -217,4 +236,5 @@ class Nyx {
     }
 }
 
+// 
 const Nyks = Nyx;
