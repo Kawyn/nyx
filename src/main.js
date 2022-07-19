@@ -177,7 +177,7 @@ class Nyx {
     /**
      * Refresh canvas with new values of uniforms. 
      */
-    refresh() {
+    refresh = () => {
 
         const ctx = this.ctx;
 
