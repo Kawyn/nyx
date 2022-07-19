@@ -228,7 +228,7 @@ class Nyx {
                     break;
 
                 default:
-                    console.warn('[NYX] UNIFORM ERROR: ' + uniform.type + ' is not valid unifrom type in webctx.');
+                    throw '[NYX] UNIFORM ERROR: ' + uniform.type + ' is not valid unifrom type in webctx.';
             }
         }
 
@@ -236,5 +236,5 @@ class Nyx {
     }
 }
 
-// 
+// Multilanguage support. :upside_down:
 const Nyks = Nyx;
