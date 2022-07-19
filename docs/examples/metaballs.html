@@ -54,7 +54,7 @@
     <script>
         const metaballs = new Nyx('metaballs', innerHeight * 0.8);
 
-        metaballs.uniforms.new('u_mouse', '2f', [0, 0], true);
+        metaballs.uniforms.new('u_mouse', '2f', [0, 0]);
         metaballs.canvas.addEventListener('mousemove', event => {
 
             const rect = metaballs.canvas.getBoundingClientRect();
